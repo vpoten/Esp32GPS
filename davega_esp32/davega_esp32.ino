@@ -27,6 +27,10 @@
 #define REVISION_ID "$Id$"
 #define FW_VERSION "master"
 
+#ifdef GPS_ENABLED
+#include <TinyGPS++.h>
+#endif
+
 //#define DEBUG
 #ifdef DEBUG
 #define D(x) Serial.println(x)
@@ -137,6 +141,16 @@ int32_t last_rpm;
 uint32_t button_1_last_up_time = 0;
 uint32_t button_2_last_up_time = 0;
 
+#ifdef GPS_ENABLED
+TinyGPSPlus gps;
+HardwareSerial SerialGPS(GPS_UART);
+GpsDataState_t gpsState = {};
+
+void setup_gps() {
+  SerialGPS.begin(9600, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN);
+}
+#endif
+
 int32_t rotations_to_meters(int32_t rotations) {
   float gear_ratio = float(WHEEL_PULLEY_TEETH) / float(MOTOR_PULLEY_TEETH);
   return (rotations / MOTOR_POLE_PAIRS / gear_ratio) * WHEEL_DIAMETER_MM * PI / 1000;
@@ -181,6 +195,10 @@ void setup() {
   Serial.begin(115200);
 #endif
   vesc_comm.init(115200);
+
+#ifdef GPS_ENABLED
+  setup_gps();
+#endif
 
   if (!eeprom_is_initialized(EEPROM_MAGIC_VALUE)) {
     eeprom_initialize(EEPROM_MAGIC_VALUE);
@@ -271,6 +289,10 @@ void loop() {
     scr->heartbeat(UPDATE_DELAY, false);
     return;
   }
+
+#ifdef GPS_ENABLED
+  // TODO <----- GPS read and update state
+#endif
 
   data.mosfet_celsius = vesc_comm.get_temp_mosfet();
   data.motor_celsius = vesc_comm.get_temp_motor();

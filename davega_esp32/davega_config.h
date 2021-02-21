@@ -220,4 +220,13 @@
 #define TFT_LED 0
 #endif
 
+///////////////////////////
+// GPS configuration
+///////////////////////////
+#define GPS_ENABLED  // Comment this line to disable GPS
+#define GPS_RX_PIN 16
+#define GPS_TX_PIN 17
+#define GPS_UART 1
+
+
 #endif //DAVEGA_DAVEGA_CONFIG_H
