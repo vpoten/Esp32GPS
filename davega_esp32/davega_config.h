@@ -77,7 +77,7 @@
     3.90 * BATTERY_S, \
     4.0 * BATTERY_S, \
     4.2 * BATTERY_S, \
-}
+  }
 
 // Remaining battery capacity can be estimated from the battery voltage
 // and from the VESC coulomb counter (number of mAh spent). The VOLTAGE_WEIGHT is
@@ -180,10 +180,42 @@
     SCR_AVG_SPEED, \
     SCR_TIME_ELAPSED, \
     SCR_TIME_RIDING, \
-}
+  }
 
 // Big font is only recommended for landscape orientation. 9 lines fit on the screen then.
 // Some items overflow the right order. You may want to adjust the labels in davega_text_screen.cpp.
 #define TEXT_SCREEN_BIG_FONT false
+
+////////////////////////////
+// Button configuration
+////////////////////////////
+#if defined(ESP32)
+#define BUTTON_1_PIN 16
+#define BUTTON_2_PIN 5
+#define BUTTON_3_PIN 4
+#else
+#define BUTTON_1_PIN A3
+#define BUTTON_2_PIN A2
+#define BUTTON_3_PIN A1
+#endif
+
+///////////////////////////
+// TFT configuration
+///////////////////////////
+#if defined(ESP32)
+#define TFT_RST 26  // IO 26
+#define TFT_RS  25  // IO 25
+#define TFT_CLK 14  // HSPI-SCK
+#define TFT_SDI 13  // HSPI-MOSI
+#define TFT_CS  15  // HSPI-SS0
+#define TFT_LED 0   // 0 if wired to +5V directly
+#else
+#define TFT_RST 12
+#define TFT_RS  9
+#define TFT_CS  10  // SS
+#define TFT_SDI 11  // MOSI
+#define TFT_CLK 13  // SCK
+#define TFT_LED 0
+#endif
 
 #endif //DAVEGA_DAVEGA_CONFIG_H

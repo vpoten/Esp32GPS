@@ -18,42 +18,30 @@
 */
 
 #include "davega_ili9225_screen.h"
+#include "davega_config.h"
 #include "SPI.h"
 
 #if defined(ESP32)
-#define TFT_RST 26  // IO 26
-#define TFT_RS  25  // IO 25
-#define TFT_CLK 14  // HSPI-SCK
-#define TFT_SDI 13  // HSPI-MOSI
-#define TFT_CS  15  // HSPI-SS0
-#define TFT_LED 0   // 0 if wired to +5V directly
 SPIClass hspi(HSPI);
-#else
-#define TFT_RST 12
-#define TFT_RS  9
-#define TFT_CS  10  // SS
-#define TFT_SDI 11  // MOSI
-#define TFT_CLK 13  // SCK
-#define TFT_LED 0
 #endif
 
 TFT_22_ILI9225 tft = TFT_22_ILI9225(TFT_RST, TFT_RS, TFT_CS, TFT_LED, 200);
 TFT_22_ILI9225* p_tft = nullptr;
 
 void DavegaILI9225Screen::init(t_davega_screen_config *config) {
-    DavegaScreen::init(config);
-    if (!p_tft) {
-        p_tft = &tft;
-        
-        #if defined(ESP32)
-        hspi.begin();
-        p_tft->begin(hspi);
-        #else
-        p_tft->begin();
-        #endif
-        
-        p_tft->setOrientation(config->orientation);
-        p_tft->setBackgroundColor(COLOR_BLACK);
-    }
-    _tft = p_tft;
+  DavegaScreen::init(config);
+  if (!p_tft) {
+    p_tft = &tft;
+
+#if defined(ESP32)
+    hspi.begin();
+    p_tft->begin(hspi);
+#else
+    p_tft->begin();
+#endif
+
+    p_tft->setOrientation(config->orientation);
+    p_tft->setBackgroundColor(COLOR_BLACK);
+  }
+  _tft = p_tft;
 }
