@@ -199,6 +199,8 @@
 #define BUTTON_3_PIN A1
 #endif
 
+#define BUTTON_INPUT_MODE INPUT  // {INPUT, INPUT_PULLUP}
+
 ///////////////////////////
 // TFT configuration
 ///////////////////////////

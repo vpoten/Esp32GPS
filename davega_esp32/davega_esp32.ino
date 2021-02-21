@@ -173,9 +173,9 @@ bool is_battery_full(float current_volts) {
 }
 
 void setup() {
-  pinMode(BUTTON_1_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_2_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_3_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_1_PIN, BUTTON_INPUT_MODE);
+  pinMode(BUTTON_2_PIN, BUTTON_INPUT_MODE);
+  pinMode(BUTTON_3_PIN, BUTTON_INPUT_MODE);
 
 #ifdef DEBUG
   Serial.begin(115200);
