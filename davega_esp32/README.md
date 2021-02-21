@@ -26,6 +26,7 @@ There's a story behind the name, but it's a long one. It all started on [esk8 bu
 - known to work well with the VESC FW v3.48 and v3.40
   - previous versions not tested but should work as well unless too old
 - FOCBOX Unity supported
+- GPS data screen
 
 ## Configuring and installing firmware
 
