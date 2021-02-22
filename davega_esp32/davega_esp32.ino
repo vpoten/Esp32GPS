@@ -142,12 +142,50 @@ uint32_t button_1_last_up_time = 0;
 uint32_t button_2_last_up_time = 0;
 
 #ifdef GPS_ENABLED
+//
+//  GPS variables and functions
+//
+
 TinyGPSPlus gps;
 HardwareSerial SerialGPS(GPS_UART);
 GpsDataState_t gpsState = {};
 
+//
+//  Setup GPS serial
+//
 void setup_gps() {
   SerialGPS.begin(9600, SERIAL_8N1, GPS_RX_PIN, GPS_TX_PIN);
+}
+
+//
+//  Update gpsState and TinyGPSPlus object
+//
+void update_gps() {
+  while (SerialGPS.available() > 0) {
+    gps.encode(SerialGPS.read());
+  }
+
+  if (gps.satellites.value() > 4) {
+    gpsState.dist = TinyGPSPlus::distanceBetween(gps.location.lat(), gps.location.lng(), gpsState.originLat, gpsState.originLon);
+
+    if (gpsState.dist > gpsState.distMax && abs(gpsState.prevDist - gpsState.dist) < 50) {
+      gpsState.distMax = gpsState.dist;
+    }
+
+    gpsState.prevDist = gpsState.dist;
+
+    if (gps.altitude.meters() > gpsState.altMax) {
+      gpsState.altMax = gps.altitude.meters();
+    }
+
+    if (gps.speed.mps() > gpsState.spdMax) {
+      gpsState.spdMax = gps.speed.mps();
+    }
+
+    if (gps.altitude.meters() < gpsState.altMin) {
+      gpsState.altMin = gps.altitude.meters();
+    }
+  }
 }
 #endif
 
@@ -291,7 +329,7 @@ void loop() {
   }
 
 #ifdef GPS_ENABLED
-  // TODO <----- GPS read and update state
+  update_gps();
 #endif
 
   data.mosfet_celsius = vesc_comm.get_temp_mosfet();

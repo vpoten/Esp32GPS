@@ -23,41 +23,53 @@
 #include "vesc_comm.h"
 
 typedef struct {
-    uint32_t millis_elapsed;
-    uint32_t millis_riding;
-    float max_speed_kph;
-    float min_voltage;
-    int32_t trip_meters;
+  uint32_t millis_elapsed;
+  uint32_t millis_riding;
+  float max_speed_kph;
+  float min_voltage;
+  int32_t trip_meters;
 
-    // TODO:
-    // max_motor_temp
-    // max_fet_temp
-    // max_current
-    // min_current
-    // wh_spent
-    // wh_per_km (derived)
-    // range_km (derived)
+  // TODO:
+  // max_motor_temp
+  // max_fet_temp
+  // max_current
+  // min_current
+  // wh_spent
+  // wh_per_km (derived)
+  // range_km (derived)
 } t_davega_session_data;
 
 typedef struct {
-    float mosfet_celsius;
-    float motor_celsius;
-    float motor_amps;
-    float battery_amps;
-    float duty_cycle;
-    float voltage;
-    float voltage_percent;
-    int32_t mah;
-    float mah_reset_progress;
-    float mah_percent;
-    float battery_percent;
-    float speed_kph;
-    float speed_percent;
-    float trip_km;
-    float session_reset_progress;
-    float total_km;
-    vesc_comm_fault_code vesc_fault_code = FAULT_CODE_NONE;
-    t_davega_session_data* session;
+  float mosfet_celsius;
+  float motor_celsius;
+  float motor_amps;
+  float battery_amps;
+  float duty_cycle;
+  float voltage;
+  float voltage_percent;
+  int32_t mah;
+  float mah_reset_progress;
+  float mah_percent;
+  float battery_percent;
+  float speed_kph;
+  float speed_percent;
+  float trip_km;
+  float session_reset_progress;
+  float total_km;
+  vesc_comm_fault_code vesc_fault_code = FAULT_CODE_NONE;
+  t_davega_session_data* session;
 } t_davega_data;
+
+struct GpsDataState_t {
+  double originLat = 0;
+  double originLon = 0;
+  double originAlt = 0;
+  double distMax = 0;
+  double dist = 0;
+  double altMax = -999999;
+  double altMin = 999999;
+  double spdMax = 0;
+  double prevDist = 0;
+};
 
 #endif //DAVEGA_DATA_H
