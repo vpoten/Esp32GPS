@@ -186,6 +186,11 @@ void update_gps() {
       gpsState.altMin = gps.altitude.meters();
     }
   }
+
+  if (millis() > 5000 && gps.charsProcessed() < 10) {
+    // check error
+    D("ERROR: not getting any GPS data!");
+  }
 }
 #endif
 
