@@ -186,4 +186,27 @@
 // Some items overflow the right order. You may want to adjust the labels in davega_text_screen.cpp.
 #define TEXT_SCREEN_BIG_FONT false
 
+////////////////////////////
+// Button configuration
+////////////////////////////
+#if defined(ESP32)
+#define BUTTON_1_PIN 16
+#define BUTTON_2_PIN 5
+#define BUTTON_3_PIN 4
+#else
+#define BUTTON_1_PIN A3
+#define BUTTON_2_PIN A2
+#define BUTTON_3_PIN A1
+#endif
+
+#define BUTTON_INPUT_MODE INPUT  // {INPUT, INPUT_PULLUP}
+
+///////////////////////////
+// GPS configuration
+///////////////////////////
+#define GPS_ENABLED  // Comment this line to disable GPS
+#define GPS_RX_PIN 16
+#define GPS_TX_PIN 17
+#define GPS_UART 1
+
 #endif //DAVEGA_DAVEGA_CONFIG_H

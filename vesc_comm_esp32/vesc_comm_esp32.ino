@@ -33,16 +33,6 @@
 #define D(x)
 #endif
 
-#if defined(ESP32)
-#define BUTTON_1_PIN 16
-#define BUTTON_2_PIN 5
-#define BUTTON_3_PIN 4
-#else
-#define BUTTON_1_PIN A3
-#define BUTTON_2_PIN A2
-#define BUTTON_3_PIN A1
-#endif
-
 #define LEN(X) (sizeof(X) / sizeof(X[0]))
 
 #ifdef FOCBOX_UNITY
@@ -106,9 +96,9 @@ bool is_battery_full(float current_volts) {
 }
 
 void setup() {
-  pinMode(BUTTON_1_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_2_PIN, INPUT_PULLUP);
-  pinMode(BUTTON_3_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_1_PIN, BUTTON_INPUT_MODE);
+  pinMode(BUTTON_2_PIN, BUTTON_INPUT_MODE);
+  pinMode(BUTTON_3_PIN, BUTTON_INPUT_MODE);
 
 #ifdef DEBUG
   Serial.begin(115200);
